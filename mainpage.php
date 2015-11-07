@@ -66,7 +66,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   	} else {
       	    $query = "insert into director values($maxID, \"$last_name\", \"$first_name\", $birth, $death);";
   	}
-echo $query;
   	mysql_query($query, $db_connection);
         mysql_close($db_connection);
     }
