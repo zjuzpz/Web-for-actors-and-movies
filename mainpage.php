@@ -9,7 +9,7 @@
 <html>
     <head>
 	<title>
-		"Query in movies"
+		"Mainpage"
 	</title>
     </head>
     <body>

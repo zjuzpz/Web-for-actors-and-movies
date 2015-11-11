@@ -5,7 +5,7 @@ select count(*) from movieGenre;
 select count(*) from movieDirector;
 select count(*) from movieActor;
 select count(*) from review;
-select count(*) from maxPersonID;
-select count(*) from maxMovieID;
+select * from maxPersonID;
+select * from maxMovieID;
 
 

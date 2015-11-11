@@ -51,7 +51,6 @@ create table movieGenre
 (
 mid integer not null comment "movie ID",
 genre varchar(20) not null comment "movie genre",
-primary key(mid),
 foreign key(mid) references movie(id)
 ) ENGINE=INNODB;
 
