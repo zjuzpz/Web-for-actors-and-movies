@@ -16,7 +16,7 @@
 	<h3>Add a new movie </h3>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>"> 
 	   <style>.required {color:#ff0000;} </style>
-	   Ttile: <input type="text" name="title" style="font-size:18px;width:150px;"> <span class=required>*</span> </br>
+	   Title: <input type="text" name="title" style="font-size:18px;width:150px;"> <span class=required>*</span> </br>
 	   Company: <input type="text" name="company" style="font-size:18px;width:150px;"> <span class=required>*</span> </br>
 	   Year <input type="number" name="year" min="1800" max="2100" style="width:100px;"><span class=required>*</span></br>
 	   MPAA Rating <select name="rating"> 
