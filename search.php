@@ -59,7 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		    $query_movie = "select title from movie where id = ".$mid.";";
 		    $rs_movie = mysql_query($query_movie, $db_connection);
 		    if($row_movie = mysql_fetch_row($rs_movie)) {
-		        echo "Movie: ".$row_movie[0]."</br>";	    
+		        echo "Movie: ";
+			echo "<a href=searchresult.php?type=movie&id=".$mid.">".$row_movie[0]."</a></br>";	    
 		    } 
 	        }  
 	    }
@@ -74,7 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $query_actor = "select first, last from actor where id = ".$aid.";";
                     $rs_actor = mysql_query($query_actor, $db_connection);
                     if($row_actor = mysql_fetch_row($rs_actor)) {
-                        echo "Actor: ".$row_actor[0]." ".$row_actor[1]."</br>";
+                        echo "Actor: ";
+			echo "<a href=searchresult.php?type=actor&id=".$aid.">".$row_actor[0]." ".$row_actor[1]."</a></br>";	    
 	            }
 	        }
 	    }
@@ -88,7 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $query_actor = "select first, last from actor where id = ".$aid.";";
                     $rs_actor = mysql_query($query_actor, $db_connection);
                     if($row_actor = mysql_fetch_row($rs_actor)) {
-                    echo "Actor: ".$row_actor[0]." ".$row_actor[1]."</br>";
+                    echo "Actor: ";
+	            echo "<a href=searchresult.php?type=actor&id=".$aid.">".$row_actor[0]." ".$row_actor[1]."</a></br>";	    
                     }
 	        }
 	    }
