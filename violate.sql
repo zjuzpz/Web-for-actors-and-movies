@@ -14,17 +14,17 @@ Test integrity of the database
 */
 
 /*Test 1*/
-insert into movieGenre values(2000000, "action");
+insert into MovieGenre values(2000000, "action");
 /*Test 2*/
-insert into movieDirector values(2000000, 37146);*/
+insert into MovieDirector values(2000000, 37146);*/
 /*Test 3*/
-insert into movieDirector values(272,2000000);*/
+insert into MovieDirector values(272,2000000);*/
 /*Test 4*/
-insert into movieActor values(2000000,10,"role");*/
+insert into MovieActor values(2000000,10,"role");*/
 /*Test 5*/
-insert into movieActor values(272, 2000000, "role");*/
+insert into MovieActor values(272, 2000000, "role");*/
 /*Test 6*/
-insert into review values("name", null, 2000000, 5, "comment");*/
+insert into Review values("name", null, 2000000, 5, "comment");*/
 /*Notice: From test7, the constraints are set by check statements, which are not supported by mySQL!*/
 /*Test 7*/
 /*insert into movie values(-1, "movie", 2001, null, "company");*/

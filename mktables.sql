@@ -2,17 +2,17 @@
 1) Only InnoDB storage engine supports foreign key constraints
 2) Check constraints are not supported in MySQL nor are general SQL assertions :(
 */
-drop table if exists movieDirector cascade;
-drop table if exists movieActor cascade;
-drop table if exists review cascade;
-drop table if exists movieGenre cascade;
-drop table if exists actor cascade;
-drop table if exists movie cascade;
-drop table if exists director cascade;
-drop table if exists maxPersonID cascade;
-drop table if exists maxMovieID cascade;
+drop table if exists MovieDirector cascade;
+drop table if exists MovieActor cascade;
+drop table if exists Review cascade;
+drop table if exists MovieGenre cascade;
+drop table if exists Actor cascade;
+drop table if exists Movie cascade;
+drop table if exists Director cascade;
+drop table if exists MaxPersonID cascade;
+drop table if exists MaxMovieID cascade;
 
-create table movie
+create table Movie
 (
 id integer not null comment 'movie ID',
 title varchar(100) not null comment 'movie title',
@@ -24,7 +24,7 @@ check(year >= 1800 and year <= 2100),
 check(id > 0)
 ) ENGINE=INNODB;
 
-create table actor
+create table Actor
 (
 id integer not null comment "actor ID",
 last varchar(20) not null comment "last name",
@@ -36,7 +36,7 @@ primary key(id),
 check(id > 0)
 ) ENGINE=INNODB;
 
-create table director
+create table Director
 (
 id integer not null comment "director ID",
 last varchar(20) not null comment "last name",
@@ -47,47 +47,47 @@ primary key(id),
 check(id > 0)
 ) ENGINE=INNODB;
 
-create table movieGenre
+create table MovieGenre
 (
 mid integer not null comment "movie ID",
 genre varchar(20) not null comment "movie genre",
-foreign key(mid) references movie(id)
+foreign key(mid) references Movie(id)
 ) ENGINE=INNODB;
 
-create table movieDirector
+create table MovieDirector
 (
 mid integer not null comment "movie ID",
 did integer not null comment "director ID",
-foreign key(mid) references movie(id),
-foreign key(did) references director(id)
+foreign key(mid) references Movie(id),
+foreign key(did) references Director(id)
 ) ENGINE=INNODB;
 
-create table movieActor
+create table MovieActor
 (
 mid integer not null comment "movie ID",
 aid integer not null comment "actor ID",
 role varchar(50) comment "actor role in movie",
-foreign key(mid) references movie(id),
-foreign key(aid) references actor(id)
+foreign key(mid) references Movie(id),
+foreign key(aid) references Actor(id)
 ) ENGINE=INNODB;
 
-create table review
+create table Review
 (
 name varchar(20) not null comment "reviewer name",
 time timestamp comment "review time",
 mid integer not null comment "movie ID",
 rating integer comment "review rating",
 comment varchar(500) not null comment "reviewer comment",
-foreign key(mid) references movie(id)
+foreign key(mid) references Movie(id)
 ) ENGINE=INNODB;
 
-create table maxPersonID 
+create table MaxPersonID 
 (
 id int comment "max ID assigned to all persons",
 check(id >= 0)
 ) ENGINE=INNODB;
 
-create table maxMovieID
+create table MaxMovieID
 (
 id int comment "max ID assigned to all movies",
 check(id >= 0)

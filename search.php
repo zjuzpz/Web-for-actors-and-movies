@@ -1,109 +1,88 @@
-<!--
-    Search page.
- -->
+<!-- Page S1: A page that lets users search for an actor/actress/movie through a keyword search interface. (For actor/actress, you should examine first/last name, and for movie, you should examine title.) -->
+
 <!DOCTYPE html>
 <html>
-    <head>
-	<title>
-		Search movie or actor
-	</title>
-    </head>
-    <body>
-	<h3>Search movie or actor </h3>
-	<?php
- 	    $db_connection = mysql_connect("localhost", "root", "root");
- 	    mysql_select_db("movie", $db_connection);
-	?>
-	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>"> 
-	     <style>.required {color:#ff0000;} </style>
-	     Search <input type="text" name="search" style="font-size:18px; width:250px;"> </br>
-	     <input type="submit" value="search">
-	</form>
+<head>
+    <title>
+        Search Actor/Movie
+    </title>
+</head>
+<body>
+<?php
+require_once('base.php');
+?>
+<h3>Search Actor/Movie</h3>
+<?php
+$db_connection = connect();
+?>
+<form method="POST" action="<?php
+echo $_SERVER['PHP_SELF']; ?>">
+    <input type="text" name="search"> <br>
+    <input type="submit" value="search">
+</form>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // collect value of input field
     $search = $_POST["search"];
     if (empty($search)) {
         echo "Please input the name of an actor or a movie";
     } else {
-	$s = split(" ", $search);
-	$first = $s[0];
-	if(count($s) == 2) {
-	    $last = $s[1];
-	} else {$last = Null;}
-	//search by movie
-	$query1 = "select id from movie where title like \"%".$search."%\";";
-	//search by actor
-	if(!empty($last)) {
-	    $query2 = "select id from actor where first = \"".$first."\" and last = \"".$last."\";";
-            $query3 = NUll;
-	} else if(count($s) == 1) {
-	    $query2 = "select id from actor where first = \"".$first."\";";
-	    $query3 = "select id from actor where last = \"".$first."\";";
-	} else {
-	    $query2 = Null;
-	    $query3 = NUll;
-	}
-//	echo "%\"\"%";
-//	echo $query1."</br>";
-//	echo $query2."</br>";
-//	echo $query3."</br>";
 
-//search movie by title
-	$rs1 = mysql_query($query1, $db_connection);
-	while($row1 = mysql_fetch_row($rs1)) {
-	    for($i=0;$i<count($row1);$i++) {
-	        if($row1[$i]) {
-	    	    $mid = $row1[$i];
-		    $query_movie = "select title from movie where id = ".$mid.";";
-		    $rs_movie = mysql_query($query_movie, $db_connection);
-		    if($row_movie = mysql_fetch_row($rs_movie)) {
-		        echo "Movie: ";
-			echo "<a href=searchresult.php?type=movie&id=".$mid.">".$row_movie[0]."</a></br>";	    
-		    } 
-	        }  
-	    }
-	}
-//search actor by first and last or first;
-
-	$rs2 = mysql_query($query2, $db_connection);
-	while($row2 = mysql_fetch_row($rs2)) {
-	    for($i=0;$i<count($row2);$i++) {
-	        if($row2[$i]) {
-		    $aid = $row2[$i];
-                    $query_actor = "select first, last from actor where id = ".$aid.";";
-                    $rs_actor = mysql_query($query_actor, $db_connection);
-                    if($row_actor = mysql_fetch_row($rs_actor)) {
-                        echo "Actor: ";
-			echo "<a href=searchresult.php?type=actor&id=".$aid.">".$row_actor[0]." ".$row_actor[1]."</a></br>";	    
-	            }
-	        }
-	    }
+        //search from Movie
+        $query1 = "SELECT id FROM Movie WHERE title LIKE \"%" . $search . "%\";";
+        echo "<h4>Searching match records in Movie database ...</h4>";
+        $rs1 = mysql_query($query1, $db_connection);
+        if (mysql_num_rows($rs1) == 0) {
+            echo "No such movie record." . "<br>";
+        } else {
+            $num_movie = 0;
+            while ($row1 = mysql_fetch_row($rs1)) {
+                $num_movie += 1;
+                $mid = $row1[0];
+                $query_movie = "SELECT title FROM Movie WHERE id = " . $mid . ";";
+                $rs_movie = mysql_query($query_movie, $db_connection);
+                $row_movie = mysql_fetch_row($rs_movie);
+                echo "<a href=./movieInfo.php?id=" . $mid . ">" . $row_movie[0] . "</a><br>";
+            }
+            echo "<br>" . "Total movie number: " . $num_movie . "<br><br><br>";
         }
-//search actor by last name
-	$rs3 = mysql_query($query3, $db_connection);
-	while($row3 = mysql_fetch_row($rs3)) {
-            for($i=0;$i<count($row3);$i++) {
-                if($row3[$i]) {
-                    $aid = $row3[$i];
-                    $query_actor = "select first, last from actor where id = ".$aid.";";
-                    $rs_actor = mysql_query($query_actor, $db_connection);
-                    if($row_actor = mysql_fetch_row($rs_actor)) {
-                    echo "Actor: ";
-	            echo "<a href=searchresult.php?type=actor&id=".$aid.">".$row_actor[0]." ".$row_actor[1]."</a></br>";	    
-                    }
-	        }
-	    }
+
+        //search from Actor
+        $s = split(" ", $search);
+        $num = sizeof($s);
+        if ($num == 2) {
+            $first = $s[0];
+            $last = $s[1];
+            $query2 = "SELECT id FROM Actor WHERE first LIKE \"%" . $first . "%\"" . "and last LIKE \"%" . $last . "%\";";
+        } elseif ($num == 1) {
+            $middle = $s[0];
+            $query2 = "SELECT id FROM Actor  WHERE first LIKE \"%" . $middle . "%\"" . "or last LIKE \"%" . $middle . "%\";";
+        } else {
+            $query2 = "";
+        }
+        $rs2 = mysql_query($query2, $db_connection);
+        echo "<h4>Searching match records in Actor database ...</h4>";
+        if (mysql_num_rows($rs2) == 0) {
+            echo "No such actor record." . "<br>";
+        } else {
+            $num_actor = 0;
+            while ($row2 = mysql_fetch_row($rs2)) {
+                $num_actor += 1;
+                $aid = $row2[0];
+                $query_actor = "SELECT first, last FROM Actor WHERE id = " . $aid . ";";
+                $rs_actor = mysql_query($query_actor, $db_connection);
+                $row_actor = mysql_fetch_row($rs_actor);
+                echo "<a href=./actorInfo.php?id=" . $aid . ">" . $row_actor[0] . " " . $row_actor[1] . "</a><br>";
+            }
+            echo "<br>" . "Total actor number: " . $num_actor . "<br>";
         }
     }
 }
-
 ?>
 
-<?php 
-    mysql_close($db_connection); 
+<?php
+mysql_close($db_connection);
 ?>
 
-    </body>
+</body>
 </html>

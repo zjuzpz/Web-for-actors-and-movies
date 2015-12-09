@@ -7,7 +7,7 @@
     </head>
     <body>
 	<h3>Input your query into the following box</h3>
-	<h3>Example: select * from actor where id = 10<h3/>
+	<h3>Example: select * from Actor where id = 10<h3/>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
  	   Query:<br> 
 	   <textarea style="font-size:18px" name="query" rows=5 cols=50></textarea>
@@ -54,15 +54,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
      <h3>available tables: </h3>
      <ul>
-     <li>actor</li>           
-     <li>director</li>        
-     <li>maxMovieID</li>      
-     <li>maxPersonID</li>
-     <li>movie </li>
-     <li>movieActor</li>
-     <li>movieDirector</li>
-     <li>movieGenre</li>
-     <li>review</li>   
+     <li>Actor</li>           
+     <li>Director</li>        
+     <li>MaxMovieID</li>      
+     <li>MaxPersonID</li>
+     <li>Movie </li>
+     <li>MovieActor</li>
+     <li>MovieDirector</li>
+     <li>MovieGenre</li>
+     <li>Review</li>   
      </ul>
     </body>
 </html>
