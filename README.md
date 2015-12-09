@@ -3,4 +3,6 @@ The calculator.php file is warm-up part, and it is a basic calculator supporting
 The mktables.sql makes tables in your database and load.sql loads datas.<br/>
 The solutions.sql solves two queries on your database: 1)Find the names of all the actors in the movie 'Die Another Day'. and 2)Find the count of all the actors who acted in multiple movies. This filecan help you to test your database. <br/>
 The query.php file makes a front-end interface for users to access database. <br/>
-Note:This project is in process.
+The violate.sql file test the integrity of the database.<br/>
+The base.php file is the main page, and you can access to all pages.<br/>
+The back-end functions have been finished and tested.<br/>
